@@ -1,0 +1,26 @@
+version: '3'
+services:
+  flask-api:
+    build:
+      context: ./python_api
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    networks:
+      my_network:
+        aliases:
+          - test.senscritique.local
+    
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      my_network:
+
+networks:
+  my_network:
+    driver: bridge

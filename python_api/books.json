@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "title": "Les fleurs du mal",
+      "author": "Charles BAUDELAIRE",
+      "rating": 9.0
+    },
+    {
+      "id": 2,
+      "title": "Le Seigneur des anneaux",
+      "author": "J.R.R. Tolkien",
+      "rating": 7.5
+    },
+    {
+      "id": 3,
+      "title": "L'Étranger",
+      "author": "Albert CAMUS",
+      "rating": 7.7
+    },
+    {
+      "id": 4,
+      "title": "Voyage au bout de la nuit",
+      "author": "Louis-Ferdinand Céline",
+      "rating": 8
+    },
+    {
+      "id": 5,
+      "title": "La Horde du contrevent",
+      "author": "Alain DAMADIO",
+      "rating": 9
+    }
+  ]
