@@ -1,31 +1,32 @@
 from flask import Flask, request, jsonify
-import redis
+
+from client.redis import CacheClient
 
 app = Flask(__name__)
 
 # Connect to Redis
-redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
+cache = CacheClient()
 
 @app.route('/book/<int:id>', methods=['GET'])
-def get_book(id):
+def get(id):
     # Check if the book already exists
-    book_data = redis_client.hgetall(f'book:{id}')
-    if not book_data:
+    book = cache.get(f'book:{id}')
+    if not book:
         return jsonify({'error': 'Book not found'}), 404
 
-    book_info = {key.decode('utf-8'): value.decode('utf-8') for key, value in book_data.items()}
+    book_info = {key.decode('utf-8'): value.decode('utf-8') for key, value in book.items()}
     return jsonify(book_info)
 
 @app.route('/book/<int:id>', methods=['POST'])
-def create_book(id):
+def create(id):
     # Check if the book already exists
-    if redis_client.exists(f'book:{id}'):
+    if cache.exists(f'book:{id}'):
         return jsonify({'error': 'Book already exists'}), 409
 
-    book_data = request.json
+    book = request.json
 
     # Store the product data
-    redis_client.hmset(f'book:{id}', book_data)
+    cache.set(f'book:{id}', book)
 
     return jsonify({'message': 'Book created successfully'}), 201
 

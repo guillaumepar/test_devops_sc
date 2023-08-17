@@ -1,9 +1,11 @@
 import json
 import redis
 
-redis_client = redis.StrictRedis(host="redis", port=6379, db=0)
+from client.redis import CacheClient
 
-with open("python_api/books.json", "r") as f:
+cache = CacheClient()
+
+with open("static/books.json", "r") as f:
     books_data = json.load(f)
 
 for book in books_data:
@@ -14,4 +16,4 @@ for book in books_data:
 
     book_data = {"title": book_title, "author": book_author, "rating": book_rating}
 
-    redis_client.hmset(f"book:{book_id}", book_data)
+    cache.set(f"book:{book_id}", book_data)

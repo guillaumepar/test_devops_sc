@@ -1,26 +1,20 @@
 version: '3'
 services:
-  flask-api:
+  api:
     build:
-      context: ./python_api
+      context: .
+      dockerfile: ./docker/Dockerfile
     volumes:
       - .:/app
     ports:
       - "5000:5000"
     depends_on:
       - redis
-    networks:
-      my_network:
-        aliases:
-          - test.senscritique.local
-    
+    env_file:
+      - .env
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
-    networks:
-      my_network:
-
-networks:
-  my_network:
-    driver: bridge
+    env_file:
+      - .env
